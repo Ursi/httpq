@@ -1,0 +1,19 @@
+{
+  "name": "httpq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "httpq.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ursi/httpq.git"
+  },
+  "author": "Mason Mackaman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ursi/httpq/issues"
+  },
+  "homepage": "https://github.com/Ursi/httpq#readme"
+}
