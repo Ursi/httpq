@@ -32,17 +32,19 @@ module.exports = {
 					protocol = /^https/.test(first) ? https : http;
 				}
 
-				let req = protocol.request.apply(protocol, [...params, res => {
-					let buffers = [];
-					res.on('data', data => buffers.push(data));
-					res.on('end', ()=> resolve(Buffer.concat(buffers)));
-				}]);
-
+				let req = protocol.request.apply(protocol, [...params, res => resolve(this.resData(res))]);
 				req.on('error', reject);
 				reqFunc(req);
 			} catch (error) {
 				reject(error);
 			}
+		});
+	},
+	resData(res) {
+		return new Promise(resolve => {
+			let buffers = [];
+			res.on('data', data => buffers.push(data));
+			res.on('end', ()=> resolve(Buffer.concat(buffers)));
 		});
 	},
 };
