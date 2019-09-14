@@ -20,7 +20,7 @@ module.exports = {
 		return (await this.getRaw(...params)).toString();
 	},
 	async getRaw(...params) {
-		return await this.resData(await this.getRes(...params));
+		return await this.imData(await this.getRes(...params));
 	},
 	async getRes(...params) {
 		if (params.length > 1) {
@@ -42,7 +42,7 @@ module.exports = {
 		return (await this.postRaw(...params)).toString();
 	},
 	async postRaw(...params) {
-		return await this.resData(await this.postRes(...params));
+		return await this.imData(await this.postRes(...params));
 	},
 	async postRes(message, options, encoding = `utf8`) { // encoding may have to be dealth with for sending raw data, not sure if it's ignored when sending a buffer
 		options.method = `POST`;
@@ -62,11 +62,11 @@ module.exports = {
 			}
 		});
 	},
-	resData(res, write) {
+	imData(im, write) {
 		return new Promise(resolve => {
 			let buffers = [];
-			res.on(`data`, data => buffers.push(data));
-			res.on(`end`, ()=> resolve(Buffer.concat(buffers)));
+			im.on(`data`, data => buffers.push(data));
+			im.on(`end`, ()=> resolve(Buffer.concat(buffers)));
 		});
 	},
 };
