@@ -4,10 +4,14 @@ const
 	https = require(`https`);
 
 function getProtocol(param) {
-	if (typeof param == `object`) {
-		return globalThis[param.protocol];
+	if (typeof param === `object`) {
+		if (param.protocol && param.protocol.match(/^https?:$/)) {
+			return param.protocol.startsWith(`https`) ? https : http;
+		} else {
+			throw `Protocol must be either 'http:' or 'https:'`;
+		}
 	} else {
-		return /^https/.test(param) ? https : http;
+		return param.startsWith(`https`) ? https : http;
 	}
 }
 
@@ -27,7 +31,8 @@ module.exports = {
 	},
 	getToFile(filePath, ...params) {
 		return new Promise(async resolve => {
-			(await this.getRes(...params)).pipe(fs.createWriteStream(filePath))
+			(await this.getRes(...params))
+				.pipe(fs.createWriteStream(filePath))
 				.on(`finish`, resolve);
 		});
 	},
