@@ -1,6 +1,6 @@
 {
   "name": "httpq",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "HTTP Quick",
   "main": "httpq.js",
   "scripts": {
