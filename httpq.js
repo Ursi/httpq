@@ -19,6 +19,9 @@ module.exports = {
 	async get(...args) {
 		return (await this.getRaw(...args)).toString();
 	},
+	async getJson(...args) {
+		return JSON.parse(await this.getRaw(...args));
+	},
 	async getRaw(...args) {
 		return await this.imData(await this.getRes(...args));
 	},
@@ -40,6 +43,9 @@ module.exports = {
 	https: https,
 	async post(...args) {
 		return (await this.postRaw(...args)).toString();
+	},
+	async postJson(...args) {
+		return JSON.parse(await this.postRaw(...args));
 	},
 	async postRaw(...args) {
 		return await this.imData(await this.postRes(...args));
