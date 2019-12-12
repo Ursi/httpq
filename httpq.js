@@ -16,44 +16,44 @@ function getProtocol(param) {
 }
 
 module.exports = {
-	async get(...params) {
-		return (await this.getRaw(...params)).toString();
+	async get(...args) {
+		return (await this.getRaw(...args)).toString();
 	},
-	async getRaw(...params) {
-		return await this.imData(await this.getRes(...params));
+	async getRaw(...args) {
+		return await this.imData(await this.getRes(...args));
 	},
-	async getRes(...params) {
-		if (params.length > 1) {
-			params[1].method = `GET`;
+	async getRes(...args) {
+		if (args.length > 1) {
+			args[1].method = `GET`;
 		}
 
-		return res = await this.request(req => req.end(), ...params);
+		return res = await this.request(req => req.end(), ...args);
 	},
-	getToFile(filePath, ...params) {
+	getToFile(filePath, ...args) {
 		return new Promise(async resolve => {
-			(await this.getRes(...params))
+			(await this.getRes(...args))
 				.pipe(fs.createWriteStream(filePath))
 				.on(`finish`, resolve);
 		});
 	},
 	http: http,
 	https: https,
-	async post(...params) {
-		return (await this.postRaw(...params)).toString();
+	async post(...args) {
+		return (await this.postRaw(...args)).toString();
 	},
-	async postRaw(...params) {
-		return await this.imData(await this.postRes(...params));
+	async postRaw(...args) {
+		return await this.imData(await this.postRes(...args));
 	},
 	async postRes(message, options, encoding = `utf8`) { // encoding may have to be dealth with for sending raw data, not sure if it's ignored when sending a buffer
 		options.method = `POST`;
 		return res = await this.request(req => req.end(message, encoding), options);
 	},
-	request(reqFunc, ...params) {
+	request(reqFunc, ...args) {
 		return new Promise((resolve, reject) => {
 			try {
 				let
-					protocol = getProtocol(params[0]),
-					req = protocol.request(...params, res => resolve(res));
+					protocol = getProtocol(args[0]),
+					req = protocol.request(...args, res => resolve(res));
 
 				req.on(`error`, reject);
 				reqFunc(req);
